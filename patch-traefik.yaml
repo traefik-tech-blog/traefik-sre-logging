@@ -1,0 +1,31 @@
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - --global.checknewversion
+        - --global.sendanonymoususage
+        - --entryPoints.traefik.address=:9000/tcp
+        - --entryPoints.web.address=:8000/tcp
+        - --entryPoints.websecure.address=:8443/tcp
+        - --api.dashboard=true
+        - --accesslog
+        - --accesslog.format=json
+        - --accesslog.filepath=/data/access.log
+        - --ping=true
+        - --providers.kubernetescrd
+        - --providers.kubernetesingress
+        name: traefik
+      - args:
+        - /bin/sh
+        - -c
+        - tail -n+1 -F /data/access.log
+        image: busybox
+        imagePullPolicy: Always
+        name: stream-accesslog
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data
+          name: data
