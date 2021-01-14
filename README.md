@@ -1,4 +1,4 @@
-# trafik-k3s-logging
+# traefik-k3s-logging
 
 The repository contains configuration for the following components :
  - Elastic
