@@ -40,7 +40,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`httpbin.local`)
+  - match: Host(`httpbin.localhost`)
     kind: Rule
     services:
     - name: httpbin

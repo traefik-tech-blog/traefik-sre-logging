@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`kibana.local`)
+    - match: Host(`kibana.localhost`)
       kind: Rule
       services:
         - name: kibana-kibana
