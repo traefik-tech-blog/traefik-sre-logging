@@ -1,10 +1,4 @@
 ---
-# Permit co-located instances for solitary minikube virtual machines.
-antiAffinity: "soft"
-
-# Shrink default JVM heap.
-esJavaOpts: "-Xmx128m -Xms128m"
-
 filebeatConfig:
   filebeat.yml: |
     filebeat.inputs:
@@ -26,20 +20,4 @@ filebeatConfig:
     output.elasticsearch:
       host: '${NODE_NAME}'
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
-
-# Allocate smaller chunks of memory per pod.
-resources:
-  requests:
-    cpu: "100m"
-    memory: "512M"
-  limits:
-    cpu: "1000m"
-    memory: "512M"
-
-# Request smaller persistent volumes.
-volumeClaimTemplate:
-  accessModes: [ "ReadWriteOnce" ]
-  storageClassName: "local-path"
-  resources:
-    requests:
-      storage: 100M
+      
