@@ -1,4 +1,4 @@
-# traefik-k3s-logging
+# traefik-sre-logging
 
 The repository contains configuration for the following components :
  - Elastic
