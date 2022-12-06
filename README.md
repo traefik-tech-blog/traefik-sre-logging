@@ -60,7 +60,7 @@ $ kubectl get nodes
 
 ## Set up Traefik
 
-First, we will deploy Traefik using the helm chart and enabling logs. We can
+First, we will deploy Traefik using the helm chart and enable logging. We can
 configure the Helm Chart deployment with a values file. We’ll start by just enabling
 access.logs. By default, they will be on stdout of traefik pod.
 
