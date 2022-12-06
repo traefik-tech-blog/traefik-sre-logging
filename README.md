@@ -233,7 +233,7 @@ $ helm upgrade -i -f traefik-values-04.yaml traefik traefik/traefik
 $ kubectl logs -f -l app.kubernetes.io/name=traefik -c tail-accesslogs
 ```
 
-And see headerfields on the sidecar container, prefixed with `request`:
+And see header fields on the sidecar container, prefixed with `request`:
 ```json
 {
   [...],
