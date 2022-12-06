@@ -16,8 +16,8 @@ Stack](https://grafana.com/products/enterprise/) or their competitors, Traefik
 becomes part of a rich set of tools for network log analysis and visualization.
 
 In order to stay simple, everything will be deployed on default namespace and
-without any kind of protection on Traefik Dashboard. On production, you should
-use namespace and take care of how this Dashboard should be accessed.
+without any kind of protection on Traefik Dashboard. __On production, you should
+use namespace and take care of how this Dashboard should be accessed.__
 
 ## Prerequisites
 
