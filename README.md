@@ -1,4 +1,4 @@
-# Logging features for Traefik Proxy on Kubernetes
+# Log Aggregation in Kubernetes with Traefik Proxy
 
 When deployed as a Kubernetes ingress controller, Traefik can process and route
 many thousands of requests without complaint. And yet, for the operations team,
@@ -24,9 +24,9 @@ use namespace and take care of how this Dashboard should be accessed.__
 If you'd like to follow along with this tutorial on your own machine, you'll
 need a few things first:
 
-1. A Kubernetes cluster running at localhost. One way to achieve this is to
-   create a local cluster running in Docker containers using
-   [kind](https://kind.sigs.k8s.io).
+1. A Kubernetes cluster running at localhost. In this blog post, we will use
+   [kind](https://kind.sigs.k8s.io). You may also use alternatives like
+   [k3d](https://k3d.io)
 2. Helm v3.9+ [installed](https://helm.sh/docs/using_helm/#installing-helm).
 3. The `kubectl` command-line tool is installed and configured to access your
    cluster.
@@ -91,6 +91,14 @@ Let's deploy it:
 ```bash
 $ helm repo add traefik https://traefik.github.io/charts
 $ helm install traefik -f traefik-values traefik/traefik
+```
+
+If _dashboard.docker.localhost_ does not resolve, you can check that you have
+**myhostname** module enabled in `/etc/nsswitch.conf`:
+```bash
+$ cat /etc/nsswitch.conf
+[...]
+hosts:          files mdns4_minimal [NOTFOUND=return] dns myhostname
 ```
 
 You should be able to access Traefik Dashboard on the configured Host:
@@ -248,6 +256,12 @@ And see header fields on the sidecar container, prefixed with `request`:
 }
 ```
 
+By default, Traefik won't trust X-Forwarded-XXX headers. If you have a Proxy
+before your service, you may be interested to add this Proxy in your
+[trustedIPs](https://doc.traefik.io/traefik/routing/entrypoints/#forwarded-headers)
+
+Otherwise, the real IP coming from this Proxy won't be in your Traefik access logs.
+
 ## Protect sensitive header
 
 Now let's say that we want to:
@@ -348,8 +362,8 @@ And see the difference on time zone:
 
 `StartLocal` and `time` are using the `Brazil/East` TimeZone, which is UTC-3. 
 
-For the buffering, we can see on a simple load test that Traefik is able to
-handle +16% more traffic:
+For the buffering, we can see on this simple load test that Traefik was able to
+handle +16% more traffic.
 
 ```bash
 $ # Before bufferingSize
@@ -360,6 +374,11 @@ $ # After applying bufferingSize to 1000
 Requests per second:    1687.53 [#/sec] (mean)
 ```
 
+Of course, it does not mean you will have the same gain on your environment.
+It may depends on many aspect and you should test which value is better for
+your environment. Don't forget too that it means that with this settings, some
+logs can be lost. There's a trade-off between logs integrity and performance.
+
 # Summary 
 
 This simple blog post serves to demonstrate Traefik's comprehensive logging
@@ -367,7 +386,7 @@ capabilities.  You can really tailor Traefik logs before collecting them. It's
 a powerful tool to understand the health and performance of services running on
 Kubernetes clusters.
 
-The other posts of this SRE series cover the other two legs of observability :
+The other posts of this SRE series cover the other pillars of observability: 
 Metrics and Tracing. They can be used with
 [OpenTelemetry](https://opentelemetry.io/), with
 [Prometheus](https://prometheus.io) and many others.
