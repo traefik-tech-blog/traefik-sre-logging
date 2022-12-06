@@ -120,7 +120,7 @@ $ curl http://whoami.docker.localhost
 If you want to collect logs, you'll need to put those logs into a file and
 often you'll also need to convert it from raw to json.
 
-For this, we'll a local volume (emptyDir). 
+For this, we'll use a local volume (emptyDir). 
 One can change the format and set a path for access logs with those values:
 
 ```diff
