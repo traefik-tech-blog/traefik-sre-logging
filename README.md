@@ -304,7 +304,7 @@ And there are also new _origin_ headers sent by Curl with our test.
 
 ## TimeZone and Buffering
 
-Now, let's try to change the TimeZone and use the buffering feature, to gain some performance. 
+Now, let's try to change the time zone and use the buffering feature, to gain some performance. 
 
 ```diff
 --- traefik-values-05.yaml	2022-12-05 17:56:34.397503223 +0100
