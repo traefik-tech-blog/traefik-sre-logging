@@ -1,0 +1,16 @@
+ports:
+  web:
+    nodePort: 30000
+  websecure:
+    nodePort: 30001
+logs:
+  access:
+    enabled: true
+ingressRoute:
+  dashboard:
+    enabled: true
+    # Custom match rule with host domain
+    matchRule: Host(`dashboard.docker.localhost`)
+    entryPoints: ["web"]      
+additionalArguments:
+- "--ping"
