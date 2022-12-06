@@ -33,7 +33,9 @@ need a few things first:
 
 kind requires some config in order to use an IngressController on localhost:
 ```yaml 
-$ cat kind.config kind: Cluster apiVersion: kind.x-k8s.io/v1alpha4
+$ cat kind.config
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
   extraPortMappings:
