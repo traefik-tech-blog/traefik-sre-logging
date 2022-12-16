@@ -1,0 +1,31 @@
+ports:
+  web:
+    nodePort: 30000
+  websecure:
+    nodePort: 30001
+logs:
+  access:
+    enabled: true
+    format: json
+    filePath: "/var/log/traefik/access.log"
+deployment:
+  additionalContainers:
+  - name: tail-accesslogs
+    image: busybox
+    args: [ "/bin/sh", "-c", "tail -n+1 -F /var/log/traefik/access.log" ]
+    volumeMounts:
+    - name: logs
+      mountPath: /var/log/traefik
+  additionalVolumes:
+  - name: logs
+additionalVolumeMounts:
+- name: logs
+  mountPath: /var/log/traefik
+ingressRoute:
+  dashboard:
+    enabled: true
+    # Custom match rule with host domain
+    matchRule: Host(`dashboard.docker.localhost`)
+    entryPoints: ["web"]      
+additionalArguments:
+- "--ping"

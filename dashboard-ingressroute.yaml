@@ -2,15 +2,14 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: kibana
+  name: traefik
   namespace: default
-
 spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`kibana.localhost`)
-      kind: Rule
+    - kind: Rule
+      match: Host(`dashboard.docker.localhost`)
       services:
-        - name: kibana-kibana
-          port: 5601
+        - name: api@internal
+          kind: TraefikService
